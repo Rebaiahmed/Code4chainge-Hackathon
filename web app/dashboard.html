@@ -1,0 +1,76 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/animate.css">
+        <link rel="stylesheet" href="css/jquery.dataTables.min.css">
+
+    	<script src="js/jquery.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/jquery.dataTables.min.js"></script>
+    </head>
+
+    <body>
+        <div class="container" style="margin-top: 5%;">
+            <div class="row">
+                <div class="col-lg-3">
+                    <h3>Latest Transactions:</h3>
+                </div>
+                <div class="col-lg-3">
+                    <button class="btn btn-danger">Analyze</button>
+                    <a href="new.html"><button class="btn btn-danger">New Transaction</button></a>
+                </div>
+
+
+
+            </div>
+            <div class="row">
+                <table id="myTable">ù
+                    <thead>
+                        <th>Amount</th>
+                        <th>Sender</th>
+                        <th>Receiver</th>
+                        <th>bank</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                    </thead>
+                   <tbody id="transactions">
+
+                   </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+    <script>
+        $(document).ready( function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+    <script>
+        //make request to Github
+        $.ajax({
+            url : 'http://localhost:3000/api/SetTransaction'
+        }).done(function(transactions){
+          console.log(transactions)
+            $.each(transactions, function(index, transaction){
+                $('#transactions').append(`
+                    <tr>
+                        <th>${transaction.quantity}</th>
+                        <th>${transaction.senderentity}</th>
+                        <th>${transaction.receiverentity}</th>
+                        <th>${transaction.bank}</th>
+                        <th>${transaction.date}</th>
+                        <th>${transaction.time}</th>
+                    </tr>`)
+        })
+    });
+
+    </script>
+</html>
